@@ -23,9 +23,10 @@ import {
   CLIENT_UNSET,
 } from '../client/constants'
 
-const loginUrl = `${process.env.REACT_APP_API_URL}/api/Clients/login`
+const loginUrl = 'http://localhost:3000/user/login'
 
 function loginApi (email, password) {
+  debugger;
   return fetch(loginUrl, {
     method: 'POST',
     headers: {
@@ -36,7 +37,9 @@ function loginApi (email, password) {
     .then(handleApiErrors)
     .then(response => response.json())
     .then(json => json)
-    .catch((error) => { throw error })
+    .catch((error) => {
+      debugger;
+       throw 'invalidCredentials' })
 }
 
 function* logout () {

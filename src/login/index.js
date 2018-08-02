@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-
 import Messages from '../notifications/Messages'
 import Errors from '../notifications/Errors'
 
