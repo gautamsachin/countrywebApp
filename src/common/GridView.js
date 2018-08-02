@@ -14,7 +14,7 @@ export const GridView = ({ className, children, items, RowComponent, loading, ..
     textAlign: child.props.textAlign
   }));
   return (
-    <React.Fragment>
+    <div>
       {!loading && (
         <table className={`table ${className}`}>
           <thead>
@@ -25,12 +25,12 @@ export const GridView = ({ className, children, items, RowComponent, loading, ..
           </tbody>
         </table>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 
 export const GridViewColumn = ({ propKey, label }) => {
-  return <React.Fragment />;
+  return null;
 };
 
 export default Object.assign(GridView, {

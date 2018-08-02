@@ -23,7 +23,7 @@ import {
   CLIENT_UNSET,
 } from '../client/constants'
 
-const loginUrl = 'http://localhost:3000/user/login'
+const loginUrl = 'http://10.101.21.116:8000/user/login'
 
 function loginApi (email, password) {
   return fetch(loginUrl, {
@@ -70,7 +70,7 @@ function* loginFlow (email, password) {
     localStorage.setItem('token', JSON.stringify(token))
 
     // redirect them to WIDGETS!
-    browserHistory.push('/widgets')
+    browserHistory.push('/countries')
   } catch (error) {
     // error? send it to redux
     yield put({ type: LOGIN_ERROR, error })

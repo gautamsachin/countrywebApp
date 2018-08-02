@@ -17,7 +17,7 @@ export class BoxTitle extends React.Component {
 
 export class BoxTools extends React.Component {
   render() {
-    return <React.Fragment>{this.props.children}</React.Fragment>;
+    return <div>{this.props.children}</div>;
   }
 }
 
@@ -31,7 +31,7 @@ export class BoxHeader extends React.Component {
       if (isCollapsible || Tools) {
         return (
           <div className="box-tools pull-right">
-            {Tools ? React.cloneElement(Tools) : <React.Fragment />}
+            {Tools ? React.cloneElement(Tools) : null }
             {isCollapsible && (
               <button onClick={onCollapse} type="button" className="btn btn-box-tool" data-widget="collapse">
                 <i className={classnames('fa', { 'fa-plus': collapsed }, { 'fa-minus': !collapsed })} />
@@ -40,7 +40,7 @@ export class BoxHeader extends React.Component {
           </div>
         );
       }
-      return <React.Fragment />;
+      return null;
     };
 
     return (
@@ -48,7 +48,7 @@ export class BoxHeader extends React.Component {
         {Title ? (
           React.cloneElement(Title, { expandOnTitleClick: expandOnTitleClick, onTitleClick: onCollapse })
         ) : (
-          <React.Fragment />
+          null
         )}
         {renderTools()}
       </div>
@@ -124,10 +124,10 @@ export default class Box extends React.Component {
             expandOnTitleClick: expandOnTitleClick
           })
         ) : (
-          <React.Fragment />
+          null
         )}
-        {Body ? React.cloneElement(Body, { isCollapsible }) : <React.Fragment />}
-        {Footer ? React.cloneElement(Footer, { isCollapsible }) : <React.Fragment />}
+        {Body ? React.cloneElement(Body, { isCollapsible }) : null}
+        {Footer ? React.cloneElement(Footer, { isCollapsible }) : null}
         {isLoading && (
           <div className="overlay">
             <i className="fa fa-refresh fa-spin" />

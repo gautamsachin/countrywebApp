@@ -4,6 +4,7 @@ import client from './client/reducer'
 import signup from './signup/reducer'
 import login from './login/reducer'
 import widgets from './widgets/reducer'
+import country from './countries/reducer'
 
 const IndexReducer = combineReducers({
   signup,
@@ -11,6 +12,8 @@ const IndexReducer = combineReducers({
   login,
   form,
   widgets,
+  country
+  //import
 })
 
 export default IndexReducer

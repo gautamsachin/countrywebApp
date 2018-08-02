@@ -10,7 +10,7 @@ const initialState = {
   error: null
 };
 
-const reducer = function loginReducer(state = initialState, action) {
+const countryReducer = function (state = initialState, action) {
   switch (action.type) {
     // Set the requesting flag and append a message to be shown
     case FETCH_COUNTRIES_REQUEST:
@@ -40,4 +40,4 @@ const reducer = function loginReducer(state = initialState, action) {
   }
 };
 
-export default reducer;
+export default countryReducer;

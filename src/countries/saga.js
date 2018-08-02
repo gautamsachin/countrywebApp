@@ -3,16 +3,24 @@ import { take, fork, cancel, call, put, cancelled } from "redux-saga/effects";
 import { fetchCountriesSuccess, fetchCountriesError } from "./actions";
 // Helper for api errors
 import { handleApiErrors } from "../lib/api-errors";
+import { takeEvery } from "../../node_modules/redux-saga";
+import { FETCH_COUNTRIES_REQUEST } from "./contants";
+import axios  from  'axios';
 
 const fetchCountriesAPI = (skip, limit) => {
-  return fetch("10.101.21.116:3000/country/list");
+  console.log("skip is ",skip,limit)
+  return axios.get(`http://10.101.21.116:8000/country/list/?skip=${skip}&limit=${limit}`);
 };
 
-export default function* countriesList({ skip, limit }) {
+function* countriesList({ skip, limit }) {
   try {
     const data = yield fetchCountriesAPI(skip, limit);
-    yield put(fetchCountriesSuccess(data.countries));
+    yield put(fetchCountriesSuccess(data.data.result));
   } catch (err) {
       yield put(fetchCountriesError(err));
   }
+}
+
+export default function (){
+  return takeEvery(FETCH_COUNTRIES_REQUEST, countriesList );
 }

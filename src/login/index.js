@@ -75,9 +75,6 @@ class Login extends Component {
             <Messages messages={messages} />
           )}
           {requesting && <div>Logging in...</div>}
-          {!requesting && !successful && (
-            <Link to="/signup">Need to Signup? Click Here »</Link>
-          )}
         </div>
       </div>
     )

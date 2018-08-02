@@ -5,8 +5,7 @@ import './App.css'
 const App = props => (
   <div className="App">
     <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Welcome to Widget Reactory</h2>
+      <h2>Welcome to Country Repository</h2>
     </div>
     <section className="App-body">
       {props.children}

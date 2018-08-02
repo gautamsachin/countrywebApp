@@ -1,3 +1,6 @@
+import './assets/less/AdminLTE.css';
+import './assets/less/skins/all-skins.css';
+// import '../../../../../src/index.scss';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { applyMiddleware, createStore, compose } from 'redux'
@@ -23,7 +26,8 @@ import IndexReducer from './index-reducer'
 import IndexSagas from './index-sagas'
 
 // Setup the middleware to watch between the Reducers and the Actions
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
+import logger from 'redux-logger'
 
 // Redux DevTools - completely optional, but this is necessary for it to
 // work properly with redux saga.  Otherwise you'd just do:
@@ -41,7 +45,7 @@ const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 
 
 const store = createStore(
   IndexReducer,
-  composeSetup(applyMiddleware(sagaMiddleware)), // allows redux devtools to watch sagas
+  composeSetup(applyMiddleware(logger, sagaMiddleware)), // allows redux devtools to watch sagas
 )
 
 // Begin our Index Saga
@@ -53,7 +57,6 @@ ReactDOM.render(
       <Route path="/" component={App} >
         <IndexRoute onEnter={checkIndexAuthorization(store)} />
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
         <Route path="/countries" component={Countries} />
         <Route onEnter={checkWidgetAuthorization(store)} path="/widgets" component={Widgets} />
       </Route>
