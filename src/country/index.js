@@ -7,8 +7,9 @@ import Box, {
   BoxTools,
   BoxTitle
 } from "../common/ExtendedBox";
-import { fetchCountriesRequest,deleteCountryRequest, saveCountryRequest } from "../countries/actions";
+import { fetchCountriesRequest,deleteCountryRequest, saveCountryData } from "../countries/actions";
 import { connect } from "react-redux";
+import { browserHistory } from 'react-router'
 
 class AddCountry extends React.Component {
 
@@ -18,12 +19,16 @@ class AddCountry extends React.Component {
             schema: [
                 'name',
                 'capital',
-                'area'
+                'area',
+                'demonym',
+                'alpha2Code',
             ],
             model: {
                 'name': '',
                 'capital': '',
-                'area':''
+                'area':'',
+                'demonym':'',
+                "alpha2Code": '',
             },
             cancelFlag: false
         }
@@ -49,30 +54,22 @@ class AddCountry extends React.Component {
     
     handleSave(e){
         e.preventDefault();
-        console.log('insidethe sae',this.state.model);
         this.saveCountryData(this.state.model);
 
     }
-    handleCancel(){
-        this.setState({
-            cancelFlag: true,
-            model:{
-                'Id': '',
-                'Name': '',
-                'Code': ''
-            }
-        });
+    handleCancel(e){
+        e.preventDefault();
+        browserHistory.push('/countries')
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps', nextProps.countries[0]);
         let model = {...nextProps.countries[0]}
         this.setState({model});
         //
     }
     componentDidMount(){
         const id = this.props.routeParams.id;
-        this.fetchCountries(id);
+       if(id) this.fetchCountries(id);
     }
 
     fetchCountries = (id) => {
@@ -101,7 +98,7 @@ class AddCountry extends React.Component {
                     )
                 })}
                 <button className="btn btn-primary" onClick={this.handleSave.bind(this)}>Save</button>
-                <button className="btn btn-primary" onClick={this.handleCancel.bind(this)}>Cancel</button>
+                <button className="btn btn-primary" onClick={this.handleCancel.bind(this)}>Back</button>
             </Form>
         )
     }
@@ -117,9 +114,10 @@ const mapStateToProps = ({country}) => ({
       dispatch(fetchCountriesRequest(id,skip, limit))
   
     },
-    deleteCountryById:(id,skip,limit)=>{
-      dispatch(deleteCountryRequest(id,skip,limit))
-    }
+    saveCountryData:(model)=>{
+      dispatch(saveCountryData(model))
+    },
+    
   });
 
 

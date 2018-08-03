@@ -3,8 +3,10 @@ import {
   FETCH_COUNTRIES_SUCCESS,
   FETCH_COUNTRIES_ERROR,
   DELETE_COUNTRY_REQUEST,
-  DELETE_COUNTRY_SUCCESS
+  DELETE_COUNTRY_SUCCESS,
+  SAVE_COUNTRY_REQUEST
 } from "./contants";
+import { LOGOUT } from "../login/constants";
 
 const initialState = {
   requesting: false,
@@ -43,7 +45,17 @@ const countryReducer = function (state = initialState, action) {
       case DELETE_COUNTRY_SUCCESS:
       return {
          requesting: false,delete:true
-        }
+        };
+        case SAVE_COUNTRY_REQUEST:
+        return {
+           requesting: true
+          };
+          case LOGOUT:
+          return {
+             requesting: true
+            }    
+      
+
     default:
       return state;
   }

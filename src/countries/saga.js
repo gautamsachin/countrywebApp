@@ -1,31 +1,42 @@
-import { take, fork, cancel, call, put, cancelled } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 
-import { fetchCountriesSuccess, fetchCountriesError, deleteCountrySuccess } from "./actions";
+import { fetchCountriesSuccess } from "./actions";
 // Helper for api errors
-import { handleApiErrors } from "../lib/api-errors";
 import { takeEvery } from "../../node_modules/redux-saga";
-import { FETCH_COUNTRIES_REQUEST, DELETE_COUNTRY_REQUEST } from "./contants";
+import { FETCH_COUNTRIES_REQUEST, DELETE_COUNTRY_REQUEST, SAVE_COUNTRY_REQUEST, LOGOUT } from "./contants";
 import axios  from  'axios';
+import { browserHistory } from 'react-router'
 
 const fetchCountriesAPI = (id,skip, limit) => {
   console.log("skip is ",skip,limit)
   let apiURL = 'http://localhost:8000/country/list/';
   if(id) apiURL =apiURL+id;
-  return axios.get(`${apiURL}?skip=${skip}&limit=${limit}`);
+  return axios.get(`${apiURL}?skip=${skip}&limit=${limit}`)
 };
 
 const deleteCountryAPI = (id) => {
-  //return axios.get(`http://localhost:8000/country/delete/${id}`);
-  return {status: 200,msg:"done"};
+  return axios.delete(`http://localhost:8000/country/delete/${id}`);
+  //return {status: 200,msg:"done"};
 };
+
+
+const saveCountryAPI = (model) => {
+  return axios.put(`http://localhost:8000/country/update/${model._id}`,model);
+  //return {status: 200,msg:"done"};
+};
+
+const createCountryAPI = (model)=>{
+  return axios.post(`http://localhost:8000/country/create/`,model);
+}
+
+
 
 function* countriesList({id, skip, limit }) {
   try {
     const data = yield fetchCountriesAPI(id,skip, limit);
     yield put(fetchCountriesSuccess(data.data.result));
   } catch (err) {
-
-      yield put(fetchCountriesError(err));
+    browserHistory.push('./login');
   }
 }
 
@@ -34,14 +45,41 @@ function* deleteCountryData({id,skip,limit}) {
     console.log('inside the sage',skip,limit);
     let data = yield deleteCountryAPI(id);
      data = yield fetchCountriesAPI('',skip, limit);
+     console.log('respons from server',data);
     yield put(fetchCountriesSuccess(data.data.result));
+  } catch (err) {
+
+
+  }
+}
+
+function* saveCountry({model}) {
+  try {
+    console.log('inside the save model',model);
+    let data ={}
+    if(model._id) data= yield saveCountryAPI(model);
+    else data = yield createCountryAPI(model);
+    data = yield fetchCountriesAPI(model._id);
+    browserHistory.push('/countries')
   } catch (err) {
 
   }
 }
 
+
+function* logout () {
+  //yield put(unsetClient())
+
+  localStorage.removeItem('token')
+
+  browserHistory.push('/login')
+}
+
+
 export default function (){
   return [takeEvery(FETCH_COUNTRIES_REQUEST, countriesList ),
-    takeEvery(DELETE_COUNTRY_REQUEST, deleteCountryData )
+    takeEvery(DELETE_COUNTRY_REQUEST, deleteCountryData ),
+    takeEvery(SAVE_COUNTRY_REQUEST, saveCountry ),
+    takeEvery(LOGOUT, logout ),
   ];
 }

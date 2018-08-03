@@ -10,33 +10,20 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 // add IndexRoute above and the helpers below
 import {
   checkIndexAuthorization,
-  checkWidgetAuthorization,
+  checkBasicAuthorization,
 } from './lib/check-auth'
 
-// Import all of our components
 import App from './App'
 import Login from './login'
-import Signup from './signup'
-import Widgets from './widgets'
 import Countries from './countries';
 import CountryAdd from './country';
 import './index.css'
 
-// Import the index reducer and sagas
 import IndexReducer from './index-reducer'
 import IndexSagas from './index-sagas'
 
-// Setup the middleware to watch between the Reducers and the Actions
 const sagaMiddleware = createSagaMiddleware();
 import logger from 'redux-logger'
-
-// Redux DevTools - completely optional, but this is necessary for it to
-// work properly with redux saga.  Otherwise you'd just do:
-//
-// const store = createStore(
-//   IndexReducer,
-//   applyMiddleware(sagaMiddleware)
-// )
 
 /*eslint-disable */
 const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 'object' &&
@@ -58,10 +45,10 @@ ReactDOM.render(
       <Route path="/" component={App} >
         <IndexRoute onEnter={checkIndexAuthorization(store)} />
         <Route path="/login" component={Login} />
-        <Route path="/countries" component={Countries} />
-        <Route path="/add-country" component={CountryAdd} />
-        <Route path="/edit-country/:id" component={CountryAdd} />
-        <Route onEnter={checkWidgetAuthorization(store)} path="/widgets" component={Widgets} />
+        <Route onEnter={checkBasicAuthorization(store)} path="/countries" component={Countries} />
+        <Route onEnter={checkBasicAuthorization(store)} path="/add-country" component={CountryAdd} />
+        <Route onEnter={checkBasicAuthorization(store)}path="/edit-country/:id" component={CountryAdd} />
+      {/* //  <Route onEnter={checkWidgetAuthorization(store)} path="/widgets" component={Widgets} /> */}
       </Route>
     </Router>
   </Provider>,

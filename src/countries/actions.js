@@ -1,4 +1,4 @@
-import { FETCH_COUNTRIES_REQUEST, FETCH_COUNTRIES_SUCCESS, FETCH_COUNTRIES_ERROR, DELETE_COUNTRY_REQUEST, DELETE_COUNTRY_SUCCESS } from "./contants";
+import { FETCH_COUNTRIES_REQUEST, FETCH_COUNTRIES_SUCCESS, FETCH_COUNTRIES_ERROR, DELETE_COUNTRY_REQUEST, DELETE_COUNTRY_SUCCESS, SAVE_COUNTRY_REQUEST, LOGOUT } from "./contants";
 
 export const fetchCountriesRequest = (id,skip, limit, )=>({
     type:FETCH_COUNTRIES_REQUEST,
@@ -25,8 +25,10 @@ export const deleteCountrySuccess = (data)=>({
     type:DELETE_COUNTRY_SUCCESS,
     data
 })
-export const saveCountryRequest = (model)=>({
+export const saveCountryData = (model)=>({
     type:SAVE_COUNTRY_REQUEST,model
 });
-
+export const logoutHandler = ()=>({
+    type:LOGOUT
+});
 
