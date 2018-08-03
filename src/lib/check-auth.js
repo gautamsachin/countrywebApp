@@ -43,7 +43,7 @@ export function checkIndexAuthorization ({ dispatch }) {
     // we'll make this in a minute - remember begin with the end!
     // If we pass the authentication check, go to widgets
     if (checkAuthorization(dispatch)) {
-      replace('widgets')
+      replace('countries')
 
       return next()
     }

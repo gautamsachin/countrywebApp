@@ -8,7 +8,6 @@ import axios  from  'axios';
 import { browserHistory } from 'react-router'
 
 const fetchCountriesAPI = (id,skip, limit) => {
-  console.log("skip is ",skip,limit)
   let apiURL = 'http://localhost:8000/country/list/';
   if(id) apiURL =apiURL+id;
   return axios.get(`${apiURL}?skip=${skip}&limit=${limit}`)
@@ -42,10 +41,8 @@ function* countriesList({id, skip, limit }) {
 
 function* deleteCountryData({id,skip,limit}) {
   try {
-    console.log('inside the sage',skip,limit);
     let data = yield deleteCountryAPI(id);
      data = yield fetchCountriesAPI('',skip, limit);
-     console.log('respons from server',data);
     yield put(fetchCountriesSuccess(data.data.result));
   } catch (err) {
 
@@ -55,7 +52,6 @@ function* deleteCountryData({id,skip,limit}) {
 
 function* saveCountry({model}) {
   try {
-    console.log('inside the save model',model);
     let data ={}
     if(model._id) data= yield saveCountryAPI(model);
     else data = yield createCountryAPI(model);
