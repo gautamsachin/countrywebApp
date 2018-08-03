@@ -19,6 +19,7 @@ import Login from './login'
 import Signup from './signup'
 import Widgets from './widgets'
 import Countries from './countries';
+import CountryAdd from './country';
 import './index.css'
 
 // Import the index reducer and sagas
@@ -58,6 +59,8 @@ ReactDOM.render(
         <IndexRoute onEnter={checkIndexAuthorization(store)} />
         <Route path="/login" component={Login} />
         <Route path="/countries" component={Countries} />
+        <Route path="/add-country" component={CountryAdd} />
+        <Route path="/edit-country/:id" component={CountryAdd} />
         <Route onEnter={checkWidgetAuthorization(store)} path="/widgets" component={Widgets} />
       </Route>
     </Router>

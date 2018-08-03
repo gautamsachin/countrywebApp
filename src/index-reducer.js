@@ -7,11 +7,9 @@ import widgets from './widgets/reducer'
 import country from './countries/reducer'
 
 const IndexReducer = combineReducers({
-  signup,
   client,
   login,
   form,
-  widgets,
   country
   //import
 })

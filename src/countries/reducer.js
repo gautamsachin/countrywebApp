@@ -1,7 +1,9 @@
 import {
   FETCH_COUNTRIES_REQUEST,
   FETCH_COUNTRIES_SUCCESS,
-  FETCH_COUNTRIES_ERROR
+  FETCH_COUNTRIES_ERROR,
+  DELETE_COUNTRY_REQUEST,
+  DELETE_COUNTRY_SUCCESS
 } from "./contants";
 
 const initialState = {
@@ -12,7 +14,6 @@ const initialState = {
 
 const countryReducer = function (state = initialState, action) {
   switch (action.type) {
-    // Set the requesting flag and append a message to be shown
     case FETCH_COUNTRIES_REQUEST:
       return {
         requesting: true,
@@ -20,7 +21,6 @@ const countryReducer = function (state = initialState, action) {
         error: null
       };
 
-    // Successful?  Reset the login state.
     case FETCH_COUNTRIES_SUCCESS:
       return {
         requesting: false,
@@ -28,13 +28,22 @@ const countryReducer = function (state = initialState, action) {
       };
 
     // Append the error returned from our api
-    // set the success and requesting flags to false
     case FETCH_COUNTRIES_ERROR:
       return {
         requesting:false,
         error:null
       };
 
+      case DELETE_COUNTRY_REQUEST:
+      return {
+        requesting:true,
+        error:null
+      };
+
+      case DELETE_COUNTRY_SUCCESS:
+      return {
+         requesting: false,delete:true
+        }
     default:
       return state;
   }

@@ -7,12 +7,17 @@ export const GridView = ({ className, children, items, RowComponent, loading, ..
   } else {
     childrenLists = [children];
   }
-  const columns = childrenLists.map(child => ({
+  childrenLists =  childrenLists.length > 1 ? childrenLists.reduce((p,c)=> { p = p.concat(c); return p },[] ) : childrenLists;
+ 
+  const columns = childrenLists.reduce((prev,child) => {
+    child && prev.push({
     key: child.props.propKey,
     label: child.props.label,
     badge: child.props.badge,
     textAlign: child.props.textAlign
-  }));
+  })
+  return prev;
+},[]);
   return (
     <div>
       {!loading && (

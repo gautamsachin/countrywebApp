@@ -1,7 +1,6 @@
 // because Fetch doesn't recognize error responses as
 // actual errors since it's technically completing the response...
 export function handleApiErrors (response) {
-  debugger;
   if (!response.ok) throw Error(response.text())
   return response
 }
